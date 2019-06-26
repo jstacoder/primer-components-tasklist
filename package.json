@@ -1,0 +1,26 @@
+{
+  "name": "primer-components-tasklist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "src": "src"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@githubprimer/octicons-react": "^8.5.0",
+    "@primer/components": "^13.0.0",
+    "@primer/octicons-react": "^9.1.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "styled-components": "^4.3.2",
+    "uuid": "^3.3.2"
+  }
+}
