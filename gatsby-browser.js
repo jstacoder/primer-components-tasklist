@@ -9,10 +9,10 @@ import { ThemeProvider } from 'styled-components'
 import { theme as primerTheme } from '@primer/components'
 
 
-// export const wrapRootElement = ({element}) =>{
-//   return (
-//     <ThemeProvider theme={{}}>/*primerTheme}>*/
-//               {element}
-//     </ThemeProvider>
-//   )
-// }
+export const wrapRootElement = ({element}) =>{
+  return (
+    <ThemeProvider theme={{primerTheme}}>
+              {element}
+    </ThemeProvider>
+  )
+}

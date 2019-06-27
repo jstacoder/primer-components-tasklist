@@ -14,38 +14,53 @@ const applyFilter = (tasks, filter) =>{
 const getCounts = tasks =>{
   const filters = ['COMPLETE', 'INCOMPLETE', 'ARCHIVED', 'ALL', 'FAVORITE']
   const rtn = {}
-
   filters.forEach(filter=> rtn[filter] = applyFilter(tasks, filter).length)
-
   return rtn
 }
 
 const useTasks = () =>{
   const initialState = []
-
   const ADD_TASK = 'ADD_TASK'
-
   const MARK_COMPLETE = 'MARK_COMPLETE'
-
   const UNDO_COMPLETE = 'UNDO_COMPLETE'
-
   const MARK_FAVORITE = 'MARK_FAVORITE'
-
   const UNDO_FAVORITE = 'UNDO_FAVORITE'
-
   const REMOVE_TASK = 'REMOVE_TASK'
-
   const UNDO_REMOVE = 'UNDO_REMOVE'
+
+  const miniReducer = (state, {type, taskId} = {})=>{
+    return {
+      [MARK_COMPLETE]: taskId =>
+        state.id !== taskId ? state : {...state, complete: true},
+      [UNDO_COMPLETE]: taskId =>
+        state.id !== taskId ? state : {...state, complete: false},
+      [REMOVE_TASK]: taskId =>
+        state.id !== taskId ? state : {...state, archived: true},
+      [UNDO_REMOVE]: taskId =>
+        state.id !== taskId ? state : {...state, archived: false},
+      [MARK_FAVORITE]: taskId =>
+        state.id !== taskId ? state : {...state, favorite: true},
+      [UNDO_FAVORITE]: taskId =>
+        state.id !== taskId ? state : {...state, favorite: false},
+    }[type](taskId)
+  }
 
   const reducer = (state = initialState, {type, value} = {})=>{
     return {
-      [ADD_TASK]:      task   => [...state, {...task, favorite: false, id: uuid(), complete: false, archived: false}],
-      [MARK_COMPLETE]: taskId => state.map(task => task.id !== taskId ? task : {...task, complete: true}),
-      [REMOVE_TASK]:   taskId => state.map(task =>task.id !== taskId ? task : {...task, archived: true}),
-      [UNDO_COMPLETE]: taskId => state.map(task => task.id !== taskId ? task : {...task, complete: false}),
-      [UNDO_REMOVE]:   taskId => state.map(task => task.id !== taskId ? task : {...task, archived: false}),
-      [MARK_FAVORITE]: taskId => state.map(task => task.id !== taskId ? task : {...task, favorite: true}),
-      [UNDO_FAVORITE]: taskId => state.map(task => task.id !== taskId ? task : {...task, favorite: false}),
+      [ADD_TASK]: task =>
+        [...state, {...task, favorite: false, id: uuid(), complete: false, archived: false}],
+      [MARK_COMPLETE]: taskId =>
+        state.map(task => miniReducer(task, {type, taskId})),
+      [UNDO_COMPLETE]: taskId =>
+        state.map(task => miniReducer(task, {type, taskId})),
+      [REMOVE_TASK]: taskId =>
+        state.map(task => miniReducer(task, {type, taskId})),
+      [UNDO_REMOVE]: taskId =>
+        state.map(task => miniReducer(task, {type, taskId})),
+      [MARK_FAVORITE]: taskId =>
+        state.map(task => miniReducer(task, {type, taskId})),
+      [UNDO_FAVORITE]: taskId =>
+        state.map(task => miniReducer(task, {type, taskId})),
     }[type](value)
   }
 
