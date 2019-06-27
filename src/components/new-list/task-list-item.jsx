@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { TextInputStyle } from './task-list'
 
 const TodoListLi = styled.li`
 	position: relative;
@@ -95,6 +96,12 @@ const TodoListLiToggle = styled.input`
 	}
 `
 
+const EditTodoInput = styled.input`
+	${TextInputStyle}
+	display: none;
+`
+
+
 
 export const TodoItem = props => {
     return (
@@ -110,9 +117,8 @@ export const TodoItem = props => {
                 </TodoListLiLabel>
                 <DestroyButton onClick={props.onDestroy} />
             </div>
-            <input
+            <EditTodoInput
                 ref={props.editRef}
-                className="edit"
                 value={props.editText}
                 onBlur={props.handleSubmit}
                 onChange={props.handleChange}

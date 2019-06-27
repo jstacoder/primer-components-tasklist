@@ -1,6 +1,10 @@
+const base = process.env.PATH_PREFIX ? process.env.PATH_PREFIX : '/primer-components-tasklist'
+console.log(`using ${base}`)
+
 export default {
-  base: '/primer-components-tasklist/',
+  base,
   src: 'src/components',
   files: "**/*.mdx",
-  wrapper: 'src/wrapper'
+  wrapper: 'src/wrapper',
+
 }

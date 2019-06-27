@@ -6,10 +6,6 @@ import TodoItem from './task-list-item'
 import styled, { css } from 'styled-components'
 
 
-const EditTodoInput = styled.input`
-	${TextInputStyle}
-`
-
 
 
 

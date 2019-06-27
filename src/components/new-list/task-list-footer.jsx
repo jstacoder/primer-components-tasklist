@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { ButtonOutline } from '@primer/components'
+
 
 import { TodoButtonStyle } from './task-list'
 import FilterLink from './task-list-filter-link'
@@ -11,13 +13,14 @@ const TodoListFooter = styled.footer`
 	text-align: center;
 	border-top: 1px solid #e6e6e6;
 
-	:before {
+	&:after {
 		content: '';
 		position: absolute;
 		right: 0;
 		bottom: 0;
 		left: 0;
 		height: 50px;
+		z-index: -100;
 		overflow: hidden;
 		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
 					0 8px 0 -3px #f6f6f6,
@@ -32,8 +35,7 @@ const TodoListFooter = styled.footer`
 `
 
 const TodoCount = styled.span`
-	text-align: left;
-    display: inline-flex;
+	text-align: left;    
 
 	strong {
 		font-weight: 300;
@@ -46,7 +48,7 @@ const Filters = styled.ul`
 	margin: 0;
 	padding: 0;
 	list-style: none;
-    display: inline-flex;
+  display: inline-flex;
 
 	@media (max-width: 430px) {
 		bottom: 10px;
@@ -57,45 +59,69 @@ const FilterLi = styled.li`
     display: inline;
 `
 
-const ClearCompleted = styled.button`
-	${TodoButtonStyle}
+const ClearCompleted = styled(ButtonOutline)`
+	${TodoButtonStyle};
 	float: right;
 	position: relative;
 	line-height: 20px;
 	text-decoration: none;
 	cursor: pointer;
-    background-color: transparent;
+  background-color: transparent;
 	:hover {
 		text-decoration: underline;
 	}
 `
 
 const TodoFooter = props =>{
-    
+    const links = ['all', 'completed', 'active']
+    const [selected, setSelected] = React.useState({
+      all: true, completed: false, active: false
+    })
+
+    const doSelectLink = link => selectee => {
+      const selection = {[link]: selectee}
+
+      links.forEach(lnk => {
+        if (lnk !== link){
+          if (selectee)
+          {
+            selection[lnk] = false
+          }
+          else
+          {
+            selection[lnk] = selected[lnk]
+          }
+        }
+      })
+      if(!selectee){
+        selection.all = true
+      }
+      setSelected(selection)
+    }
 
     return (
     <TodoListFooter>
          <TodoCount>
-            <strong>{props.count}</strong>{' '}item left
+            <strong>{props.count}</strong>{' '}items left{' '}
          </TodoCount>
          <Filters>
            <FilterLi>
-             <FilterLink>
+             <FilterLink setSelected={doSelectLink('all')} selected={selected['all']}>
                  All
              </FilterLink>
            </FilterLi>
            <FilterLi>
-               <FilterLink>
+               <FilterLink setSelected={doSelectLink('active')} selected={selected['active']}>
                    Active
                </FilterLink>
            </FilterLi>
            <FilterLi>
-               <FilterLink>
+               <FilterLink setSelected={doSelectLink('completed')} selected={selected['completed']}>
                    Completed
                </FilterLink>
            </FilterLi>
          </Filters>
-         <ClearCompleted>
+         <ClearCompleted color={'gray'}>
                 Clear completed
         </ClearCompleted>       
     </TodoListFooter>
