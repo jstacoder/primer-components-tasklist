@@ -154,9 +154,9 @@ const TaskList = props =>{
 
   return (
     <BorderBox borderColor={'gray.2'} border={1} pt={3} m={5}>
-      <UnderlineNav full>
+      <UnderlineNav full justifyContent={'space-around'}>
         {tabs.map(tab=>(
-          <UnderlineNav.Link onClick={()=>changeTab(tab)} selected={selected === tab} key={tab}>
+          <UnderlineNav.Link style={{flex:1}} onClick={()=>changeTab(tab)} selected={selected === tab} key={tab}>
             {renderTabText(tab)} <CounterLabel scheme={selected === tab ? null:'gray'}>{counts[tabToFilter[tab]]}</CounterLabel>
           </UnderlineNav.Link>
         ))}
@@ -186,7 +186,7 @@ const TaskList = props =>{
                 <StyledOcticon icon={ChevronRight} size={20}/>
               </Flex.Item>
               <Flex.Item flex={30}>
-                <TaskText task={task} color={task.complete ? 'gray.3' : 'gray.7'} as={'p'}>
+                <TaskText task={task} fontSize={20} color={task.complete ? 'gray.3' : 'gray.7'} as={'p'}>
               {task.text}
                 </TaskText>
               </Flex.Item>
