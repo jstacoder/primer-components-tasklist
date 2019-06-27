@@ -5,6 +5,7 @@ import { AsyncRoute, useComponents } from 'docz'
 import { MDXProvider } from '@mdx-js/react'
 
 import Theme from 'docz-theme-default'
+import Wrapper from 'src/wrapper'
 
 import { Link } from './Link'
 import SEO from './Seo'
@@ -51,7 +52,7 @@ const Layout = ({ children, ...defaultProps }) => {
   return (
     <Fragment>
       {entry && <SEO title={entry.value.name} />}
-      <Theme db={db} linkComponent={Link}>
+      <Theme db={db} linkComponent={Link} wrapper={Wrapper}>
         <Route {...defaultProps} entry={entry}>
           {children}
         </Route>

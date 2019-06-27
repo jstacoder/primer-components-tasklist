@@ -1,6 +1,6 @@
 export const imports = {
-  'src/pages/index.mdx': () =>
+  'new-list/new-list.mdx': () =>
     import(
-      /* webpackPrefetch: true, webpackChunkName: "src-pages-index" */ 'src/pages/index.mdx'
+      /* webpackPrefetch: true, webpackChunkName: "new-list-new-list" */ 'new-list/new-list.mdx'
     ),
 }
